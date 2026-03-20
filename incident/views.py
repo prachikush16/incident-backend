@@ -1,11 +1,10 @@
-from rest_framework import generics, filters, status
+from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from incident.models import Incident
 from incident.serializers import IncidentSerializer
-from users.serializers import UserSerializer
 
 
 class IncidentListCreateView(generics.ListCreateAPIView):
@@ -48,7 +47,6 @@ class IncidentSearchView(APIView):
 
 
 class ReporterAutofillView(APIView):
-    """Returns logged-in user's details to pre-fill incident reporter fields."""
     permission_classes = [IsAuthenticated]
 
     def get(self, request):

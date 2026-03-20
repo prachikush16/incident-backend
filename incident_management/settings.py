@@ -19,7 +19,6 @@ def env_required(key):
     return value
 
 
-# Core
 SECRET_KEY = env_required("SECRET_KEY")
 DEBUG = env("DEBUG", "False") == "True"
 ALLOWED_HOSTS = [h.strip() for h in env("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")]
@@ -33,11 +32,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # third party
     "rest_framework",
     "rest_framework_simplejwt",
     "corsheaders",
-    # local
     "users",
     "incident",
 ]
@@ -72,7 +69,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "incident_management.wsgi.application"
 
-# Database
 DATABASES = {
     "default": {
         "ENGINE": env("DB_ENGINE", "django.db.backends.postgresql"),
@@ -85,7 +81,6 @@ DATABASES = {
     }
 }
 
-# REST Framework
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
@@ -95,28 +90,20 @@ REST_FRAMEWORK = {
     ),
 }
 
-# JWT
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=int(env("JWT_ACCESS_TOKEN_LIFETIME_HOURS", 1))),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=int(env("JWT_REFRESH_TOKEN_LIFETIME_DAYS", 7))),
 }
 
-# OTP
 OTP_EXPIRY_MINUTES = int(env("OTP_EXPIRY_MINUTES", 10))
 
-# Third-party APIs
 PINCODE_API_URL = env("PINCODE_API_URL", "https://api.postalpincode.in/pincode")
 PINCODE_API_TIMEOUT = int(env("PINCODE_API_TIMEOUT", 5))
+PINCODE_API_USER_AGENT = env("PINCODE_API_USER_AGENT", "Mozilla/5.0")
 
-# CORS / CSRF
 CORS_ALLOWED_ORIGINS = [o.strip() for o in env("CORS_ALLOWED_ORIGINS", "http://localhost:3000").split(",")]
 CSRF_TRUSTED_ORIGINS = [o.strip() for o in env("CSRF_TRUSTED_ORIGINS", "http://localhost:3000").split(",")]
 
-# Email
-DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", "noreply@incidentmanagement.com")
-EMAIL_BACKEND = env("EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
-
-# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
